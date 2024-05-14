@@ -1,4 +1,5 @@
 import 'package:animeapp/features/homepage.dart';
+import 'package:animeapp/features/searchpage.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class NavigationExample extends StatefulWidget {
 }
 
 class _NavigationExampleState extends State<NavigationExample> {
-  int currentPageIndex = 1;
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         const HomePage(),
 
         /// Notifications page
-        const HomePage(),
+        SearchPage(),
 
         /// Messages page
         const HomePage(),

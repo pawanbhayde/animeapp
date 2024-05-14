@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
