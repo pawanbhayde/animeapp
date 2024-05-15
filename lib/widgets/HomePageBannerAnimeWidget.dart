@@ -1,11 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, deprecated_member_use
 
 import 'package:animeapp/api/datamodel.dart';
 import 'package:animeapp/api/fatchapi.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -173,7 +172,7 @@ class _HomePageBannerAnimeWidgetState extends State<HomePageBannerAnimeWidget> {
                 shadowWidth: 400,
                 shadowColor: AppPallete.backgroundColor,
                 child: Image.network(
-                  'https://cdn.myanimelist.net/images/anime/4/19644l.jpg',
+                  'https://cdn.myanimelist.net/images/anime/7/21569l.jpg',
                   fit: BoxFit.cover,
                   height: 400,
                   width: 400,
@@ -226,24 +225,24 @@ class _HomePageBannerAnimeWidgetState extends State<HomePageBannerAnimeWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Cowboy Bebop',
+                    const Text(
+                      'Bouken Ou Beet',
                       maxLines: 1,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppPallete.whiteColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     // const SizedBox(height: 10),
-                    Text(
-                      'Crime is timeless.',
+                    const Text(
+                      'Action, Adventure',
                       maxLines: 1,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppPallete.whiteColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
@@ -255,7 +254,8 @@ class _HomePageBannerAnimeWidgetState extends State<HomePageBannerAnimeWidget> {
                       children: [
                         ElevatedButton.icon(
                           onPressed: () {
-                            launch('https://www.youtube.com/watch?v=gY5nDXOtv_o');
+                            launch(
+                                'https://myanimelist.net/anime/8/Bouken_Ou_Beet');
                           },
                           icon: const Icon(Icons.play_arrow,
                               color: AppPallete.whiteColor),

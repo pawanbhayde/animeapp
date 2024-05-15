@@ -6,7 +6,6 @@ import 'package:animeapp/api/datamodel.dart';
 import 'package:animeapp/api/fatchapi.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -102,7 +101,7 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          return Container(
+                          return SizedBox(
                             height: 200,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

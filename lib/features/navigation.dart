@@ -49,7 +49,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         SearchPage(),
 
         /// Messages page
-        NewRelease(),
+        const NewRelease(),
       ][currentPageIndex],
     );
   }

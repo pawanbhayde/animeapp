@@ -12,7 +12,7 @@ class AnimeDetail extends StatefulWidget {
       required this.poster,
       required this.trailerThumbnail,
       required this.synopsis,
-      required this.Releases,
+      required this.releases,
       required this.producers,
       required this.score,
       required this.genres,
@@ -21,7 +21,7 @@ class AnimeDetail extends StatefulWidget {
   final String poster;
   final String trailerThumbnail;
   final String synopsis;
-  final String Releases;
+  final String releases;
   final String producers;
   final String score;
   final String genres;
@@ -101,7 +101,7 @@ class _AnimeDetailState extends State<AnimeDetail> {
                                 ),
                               ),
                               Text(
-                                'year : ${widget.Releases}',
+                                'year : ${widget.releases}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -141,14 +141,15 @@ class _AnimeDetailState extends State<AnimeDetail> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        // ignore: deprecated_member_use
                         launch(widget.url);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppPallete.primaryColor,
                       ),
-                      child: Text(
+                      child: const Text(
                         "Play Trailer",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppPallete.whiteColor,
                         ),
                       ),
@@ -222,7 +223,7 @@ class _AnimeDetailState extends State<AnimeDetail> {
                                   trailerThumbnail:
                                       snapshot.data![index].trailerThumbnail,
                                   synopsis: snapshot.data![index].synopsis,
-                                  Releases: snapshot.data![index].year,
+                                  releases: snapshot.data![index].year,
                                   score: snapshot.data![index].score,
                                   producers: snapshot.data![index].producers,
                                   genres: snapshot.data![index].genres,

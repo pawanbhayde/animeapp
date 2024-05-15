@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                                   trailerThumbnail:
                                       snapshot.data![index].trailerThumbnail,
                                   synopsis: snapshot.data![index].synopsis,
-                                  Releases: snapshot.data![index].year,
+                                  releases: snapshot.data![index].year,
                                   score: snapshot.data![index].score,
                                   producers: snapshot.data![index].producers,
                                   genres: snapshot.data![index].genres,
@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                       const SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Container(
                           width: 120,
                           height: 170,
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                         const SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Container(
                           width: 120,
                           height: 170,

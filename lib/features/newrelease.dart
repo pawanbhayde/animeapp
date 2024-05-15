@@ -2,7 +2,6 @@ import 'package:animeapp/api/datamodel.dart';
 import 'package:animeapp/api/fatchapi.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class NewRelease extends StatefulWidget {
   const NewRelease({super.key});
@@ -12,22 +11,20 @@ class NewRelease extends StatefulWidget {
 }
 
 class _NewReleaseState extends State<NewRelease> {
-  Future<List<AnimeData>>? _topAnime;
   Future<List<AnimeData>>? _upcomingAnime;
-  // Future<List<Anime>>? _popularAnime;
 
   @override
   void initState() {
     super.initState();
-    _topAnime = Backend.getTopAnime();
     _upcomingAnime = Backend.getUpcomingAnime();
-    // _popularAnime = Backend.getAnimeRecommendations();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppPallete.backgroundColor,
       appBar: AppBar(
+        backgroundColor: AppPallete.backgroundColor,
         title: const Text('New Releases'),
       ),
       body: SingleChildScrollView(
@@ -88,8 +85,7 @@ class _NewReleaseState extends State<NewRelease> {
                                     width:
                                         MediaQuery.of(context).size.width - 160,
                                     child: Text(
-                                      "Releases Date : " +
-                                          snapshot.data![index].Releases,
+                                      "Releases Date : ${snapshot.data![index].releases}",
                                       style: const TextStyle(
                                         color: AppPallete.whiteColor,
                                         fontSize: 12,
@@ -101,8 +97,7 @@ class _NewReleaseState extends State<NewRelease> {
                                     width:
                                         MediaQuery.of(context).size.width - 160,
                                     child: Text(
-                                      "Description :" +
-                                          snapshot.data![index].synopsis,
+                                      "Description :${snapshot.data![index].synopsis}",
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
