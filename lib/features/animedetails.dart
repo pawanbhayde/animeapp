@@ -1,29 +1,43 @@
 import 'package:animeapp/api/datamodel.dart';
 import 'package:animeapp/api/fatchapi.dart';
-import 'package:animeapp/features/animedetails.dart';
 import 'package:animeapp/utils/colors.dart';
-import 'package:animeapp/widgets/HomePageBannerAnimeWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AnimeDetail extends StatefulWidget {
+  const AnimeDetail(
+      {super.key,
+      required this.title,
+      required this.poster,
+      required this.trailerThumbnail,
+      required this.synopsis,
+      required this.Releases,
+      required this.producers,
+      required this.score,
+      required this.genres,
+      required this.url});
+  final String title;
+  final String poster;
+  final String trailerThumbnail;
+  final String synopsis;
+  final String Releases;
+  final String producers;
+  final String score;
+  final String genres;
+  final String url;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AnimeDetail> createState() => _AnimeDetailState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AnimeDetailState extends State<AnimeDetail> {
   Future<List<AnimeData>>? _topAnime;
-  Future<List<AnimeData>>? _upcomingAnime;
-  // Future<List<Anime>>? _popularAnime;
 
   @override
   void initState() {
     super.initState();
     _topAnime = Backend.getTopAnime();
-    _upcomingAnime = Backend.getUpcomingAnime();
-    // _popularAnime = Backend.getAnimeRecommendations();
   }
 
   @override
@@ -34,8 +48,134 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HomePageBannerAnimeWidget(),
-            // Trenidng Anime horizontal list
+            SizedBox(
+              height: 350,
+              child: Stack(
+                children: [
+                  Stack(
+                    children: <Widget>[
+                      Image.network(
+                        widget.trailerThumbnail,
+                        fit: BoxFit.cover,
+                        height: 300,
+                        width: double.infinity,
+                      ),
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        color: Colors.black
+                            .withOpacity(0.3), // Adjust opacity as needed
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.poster),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 150,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'year : ${widget.Releases}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                'Anime Rating ${widget.score}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                '${widget.genres}, ${widget.producers}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        launch(widget.url);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppPallete.primaryColor,
+                      ),
+                      child: Text(
+                        "Play Trailer",
+                        style: const TextStyle(
+                          color: AppPallete.whiteColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Anime Synopsis',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    widget.synopsis,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 5,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(20),
               child: Row(
@@ -58,7 +198,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            //list of popular anime
             FutureBuilder<List<AnimeData>>(
               future: _topAnime,
               builder: (context, snapshot) {
@@ -188,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                       const SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Container(
                           width: 120,
                           height: 170,
@@ -197,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                         const SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Container(
                           width: 120,
                           height: 170,
@@ -212,92 +351,6 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Upcomming Anime',
-                    style: TextStyle(
-                        color: AppPallete.whiteColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: AppPallete.primaryColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Trending Anime List
-            FutureBuilder<List<AnimeData>>(
-              future: _upcomingAnime,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isEmpty) {
-                    return const Text('No upcoming anime');
-                  }
-                  return Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    height: 200.0,
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 170,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        snapshot.data![index].poster),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              SizedBox(
-                                width: 120,
-                                child: Text(
-                                  snapshot.data![index].title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: AppPallete.whiteColor,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
           ],
         ),
       ),

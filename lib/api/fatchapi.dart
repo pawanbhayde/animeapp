@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -44,19 +45,23 @@ class Backend {
 
   //get random anime
   static Future<List<AnimeData>> getRandomAnime() async {
-    final response =
-        await http.get(Uri.parse('https://api.jikan.moe/v4/random/anime'));
+  final response = await http
+      .get(Uri.parse('https://api.jikan.moe/v4/random/anime'))
+      .timeout(const Duration(seconds: 5), onTimeout: () {
+    throw TimeoutException('The connection has timed out!');
+  });
 
-    if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body)['data'];
-      List<AnimeData> animeList =
-          body.map((dynamic item) => AnimeData.fromMap(item)).toList();
-      log('Random Anime List  :  $animeList ');
-      return animeList;
-    } else {
-      throw Exception('Failed to load random anime');
-    }
+  if (response.statusCode == 200) {
+    Map<String, dynamic> body = jsonDecode(response.body)['data'];
+    AnimeData anime = AnimeData.fromMap(body);
+    log('Random Anime :  $anime ');
+    return [anime]; // Wrap the single anime object in a list
+  } else if (response.statusCode == 429) {
+    throw Exception('You are being rate limited!');
+  } else {
+    throw Exception('Failed to load random anime');
   }
+}
 
   //get upcoming anime season
   static Future<List<AnimeData>> getUpcomingAnime() async {
@@ -65,6 +70,7 @@ class Backend {
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body)['data'];
+      
       List<AnimeData> animeList =
           body.map((dynamic item) => AnimeData.fromMap(item)).toList();
       log('Upcoming Anime List :  $animeList ');

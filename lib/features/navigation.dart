@@ -1,4 +1,5 @@
 import 'package:animeapp/features/homepage.dart';
+import 'package:animeapp/features/newrelease.dart';
 import 'package:animeapp/features/searchpage.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +39,6 @@ class _NavigationExampleState extends State<NavigationExample> {
             icon: Icon(Icons.calendar_month_outlined),
             label: 'New Releases',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.list_alt_outlined),
-            label: 'My List',
-          ),
         ],
       ),
       body: <Widget>[
@@ -52,10 +49,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         SearchPage(),
 
         /// Messages page
-        const HomePage(),
-
-        ///Favorites page
-        const HomePage(),
+        NewRelease(),
       ][currentPageIndex],
     );
   }

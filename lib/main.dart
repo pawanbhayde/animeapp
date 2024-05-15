@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppPallete.primaryColor),
         useMaterial3: true,
+        scaffoldBackgroundColor: AppPallete.backgroundColor,
       ),
       darkTheme: ThemeData.dark(useMaterial3: true),
       home: const NavigationExample(),
