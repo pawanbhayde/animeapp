@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:animeapp/api/datamodel.dart';
 import 'package:animeapp/api/fatchapi.dart';
+import 'package:animeapp/features/animedetails.dart';
 import 'package:animeapp/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -81,14 +82,7 @@ class _SearchPageState extends State<SearchPage> {
                 FutureBuilder<List<AnimeData>>(
                   future: _searchResults,
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
-                      );
-                    } else if (snapshot.hasData) {
+                    if (snapshot.hasData) {
                       return GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -101,37 +95,59 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 120,
-                                  // width: 120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          snapshot.data![index].poster),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  // Anime Rating At top left
-                                ),
-                                const SizedBox(height: 5),
-                                Flexible(
-                                  child: Text(
-                                    snapshot.data![index].title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: AppPallete.whiteColor,
-                                      fontSize: 14,
-                                    ),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AnimeDetail(
+                                    // animeData: snapshot.data![index],
+                                    poster: snapshot.data![index].poster,
+                                    title: snapshot.data![index].title,
+                                    trailerThumbnail:
+                                        snapshot.data![index].trailerThumbnail,
+                                    synopsis: snapshot.data![index].synopsis,
+                                    releases: snapshot.data![index].year,
+                                    score: snapshot.data![index].score,
+                                    producers: snapshot.data![index].producers,
+                                    genres: snapshot.data![index].genres,
+                                    url: snapshot.data![index].url,
                                   ),
                                 ),
-                              ],
+                              );
+                            },
+                            child: SizedBox(
+                              height: 200,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 120,
+                                    // width: 120,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            snapshot.data![index].poster),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    // Anime Rating At top left
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Flexible(
+                                    child: Text(
+                                      snapshot.data![index].title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: AppPallete.whiteColor,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -141,8 +157,45 @@ class _SearchPageState extends State<SearchPage> {
                     }
 
                     // 2 column grid view of shimmer
-                    return const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        // childAspectRatio: 3 / 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          height: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 120,
+                                // width: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[800],
+                                ),
+                                // Anime Rating At top left
+                              ),
+                              const SizedBox(height: 5),
+                              Container(
+                                height: 10,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     );
                   },
                 )

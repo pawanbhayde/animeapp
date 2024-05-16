@@ -18,37 +18,33 @@ class _NavigationExampleState extends State<NavigationExample> {
   Widget build(BuildContext context) {
     Theme.of(context);
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppPallete.backgroundColor,
+        selectedItemColor: AppPallete.primaryColor,
+        currentIndex: currentPageIndex,
+        onTap: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-        backgroundColor: AppPallete.backgroundColor,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
           ),
-          NavigationDestination(
+          BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_outlined),
             label: 'New Releases',
           ),
         ],
       ),
       body: <Widget>[
-        /// Home page
         const HomePage(),
-
-        /// Notifications page
         SearchPage(),
-
-        /// Messages page
         const NewRelease(),
       ][currentPageIndex],
     );

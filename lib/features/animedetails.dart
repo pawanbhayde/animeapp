@@ -24,7 +24,7 @@ class AnimeDetail extends StatefulWidget {
   final String releases;
   final String producers;
   final String score;
-  final String genres;
+  final List<String> genres;
   final String url;
 
   @override

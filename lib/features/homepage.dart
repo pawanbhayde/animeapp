@@ -251,37 +251,59 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 170,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        snapshot.data![index].poster),
-                                    fit: BoxFit.cover,
-                                  ),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AnimeDetail(
+                                  // animeData: snapshot.data![index],
+                                  poster: snapshot.data![index].poster,
+                                  title: snapshot.data![index].title,
+                                  trailerThumbnail:
+                                      snapshot.data![index].trailerThumbnail,
+                                  synopsis: snapshot.data![index].synopsis,
+                                  releases: snapshot.data![index].year,
+                                  score: snapshot.data![index].score,
+                                  producers: snapshot.data![index].producers,
+                                  genres: snapshot.data![index].genres,
+                                  url: snapshot.data![index].url,
                                 ),
                               ),
-                              const SizedBox(height: 5),
-                              SizedBox(
-                                width: 120,
-                                child: Text(
-                                  snapshot.data![index].title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: AppPallete.whiteColor,
-                                    fontSize: 14,
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 170,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          snapshot.data![index].poster),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                const SizedBox(height: 5),
+                                SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    snapshot.data![index].title,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: AppPallete.whiteColor,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
